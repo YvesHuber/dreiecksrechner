@@ -3,10 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import Dreieck from './Dreieck';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Dreieck></Dreieck>
   </React.StrictMode>,
   document.getElementById('root')
 );
