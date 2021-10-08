@@ -1,8 +1,15 @@
 import {useEffect, useState} from "react";
 
 function Dreieck() {
-
-    const [selectValues, setselectValues] = useEffect([])
+  const formuladata =[
+    {Value: "c", Formula: "√ A^2 + B^2", id: 0},
+    {Value: "a", Formula: "√ C^2 - B^2", id: 1},
+    {Value: "alpha", Formula: "180 - gamma - beta", id: 2},
+    {Value: "gamma", Formula: "180- alpha - beta", id: 3},
+    {Value: "height", Formula: "2 * a / b", id: 4},
+    ];
+    const [selectFormulas, setselectFormulas] = useState(formuladata);
+    const [selectedFormula, setselectedFormula] = useState({Value: "", Formula: ""});
 
     const [alphaangle, setalphaangle] = useState(0);
     const [betaangle, setbetaangle] = useState(0);
@@ -34,6 +41,9 @@ function Dreieck() {
   return (
     <div className="App">
       <header className="App-header">
+      <h3>What do you want to calculate</h3>
+          { selectFormulas.map ( (object, i) => (<a> {object.Value} <input key={i} type="radio" name="formula" onChange={ (e) => setselectedFormula(object)}/></a>))}
+      <h4>Current formula = {selectedFormula.Formula}</h4>
       
       <lable>Alpha Winkel</lable>
       <input type="number" value={alphaangle} onChange={ (e) => {if(e.target.value <= 178){
