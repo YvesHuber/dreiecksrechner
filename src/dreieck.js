@@ -1,40 +1,66 @@
-import './App.css';
 import {useEffect, useState} from "react";
-import * as THREE from 'three';
 
 function Dreieck() {
 
+    const [selectValues, setselectValues] = useEffect([])
 
-  const scene = new THREE.Scene();
+    const [alphaangle, setalphaangle] = useState(0);
+    const [betaangle, setbetaangle] = useState(0);
+    const [gammaangle, setgammaangle] = useState(0);
 
-    const [alpha, setalpha] = useState(0);
-    const [beta, setbeta] = useState(0);
-    const [gamma, setgamma] = useState(0);
+    const [alength, setalength] = useState(0);
+    const [blength, setblength] = useState(0);
+    const [clength, setclength] = useState(0);
 
-    function calculategamma(){
-      let result;
-      result = 180-alpha-beta;
-        setgamma(result);
+    function calculate(){
+      calculateangle();
+      calculatelength();
+      
     }
+
+    function calculateangle(){
+      let result;
+      result = 180-alphaangle-betaangle;
+        setgammaangle(result);
+    }
+    function calculatelength(){
+      let result;
+      result = Math.sqrt(Math.pow(alength,2) + Math.pow(blength,2));
+      setclength(result);
+    }
+
 
 
   return (
     <div className="App">
       <header className="App-header">
       
-        <lable>Alpha</lable>
-      <input type="text" value={alpha} onChange={ (e) => {if(e.target.value <= 178){
-          setalpha(e.target.value)
+      <lable>Alpha Winkel</lable>
+      <input type="number" value={alphaangle} onChange={ (e) => {if(e.target.value <= 178){
+          setalphaangle(e.target.value)
       }}}/>
-      <lable>Beta</lable>
-      <input type="text" value={beta} onChange={ (e) => {if(e.target.value <= 178){
-          setbeta(e.target.value)
+      <lable>Beta Winkel</lable>
+      <input type="number" value={betaangle} onChange={ (e) => {if(e.target.value <= 178){
+          setbetaangle(e.target.value)
       }}}/>
-      <button type="button" value="calculate" onClick={calculategamma}>calculate </button>
+      <lable>A länge </lable>
+      <input type="number" value={alength} onChange={ (e) => {
+          setalength(e.target.value)
+      }}/>
+      <lable>B länge </lable>
+      <input type="number" value={blength} onChange={ (e) => {
+          setblength(e.target.value)
+      }}/>
+      <button type="button" value="calculate" onClick={calculate}>calculate </button>
 
-      <p>Alpha = {alpha}</p>
-      <p>Beta = {beta}</p>
-      <p>Gamma = {gamma}</p>
+      <p>Alpha° = {alphaangle}</p>
+      <p>Beta° = {betaangle}</p>
+      <p>Gamma° = {gammaangle}</p>
+
+
+      <p>A Länge {alength}</p>
+      <p>B Länge {blength}</p>
+      <p>C Länge {clength}</p>
 
 
       
