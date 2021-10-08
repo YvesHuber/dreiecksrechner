@@ -1,17 +1,20 @@
 import './App.css';
 import {useEffect, useState} from "react";
-
+import * as THREE from 'three';
 
 function Dreieck() {
 
 
+  const scene = new THREE.Scene();
 
     const [alpha, setalpha] = useState(0);
     const [beta, setbeta] = useState(0);
     const [gamma, setgamma] = useState(0);
 
     function calculategamma(){
-        setgamma(180-alpha-beta);
+      let result;
+      result = 180-alpha-beta;
+        setgamma(result);
     }
 
 
@@ -32,6 +35,10 @@ function Dreieck() {
       <p>Alpha = {alpha}</p>
       <p>Beta = {beta}</p>
       <p>Gamma = {gamma}</p>
+
+
+      
+
 
         
       </header>
