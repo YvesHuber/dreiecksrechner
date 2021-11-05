@@ -1,10 +1,19 @@
 import {useEffect, useState} from "react";
 import * as THREE from 'three';
+import Sketch from "react-p5";
 
 
 
 function Dreieck() {
-  const scene = new THREE.Scene();
+
+
+  const setup = (p5, canvasParentRef) => {
+		p5.createCanvas(500, 500).parent(canvasParentRef);
+	};
+  const draw = (p5) => {
+		p5.background(0);
+		p5.triangle(input1, input2, result, 90,30, 60);
+	};
 
   const formuladata =[
     {Value: "c", Formula: "√ A^2 + B^2", id: 1},
@@ -43,40 +52,11 @@ function Dreieck() {
         //calculate hypothenuse
         setresult( 2 * input1 / input2);
       }
-
-
-    }
-    function draw(){
-      const renderer = new THREE.WebGLRenderer();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-  document.body.appendChild(renderer.domElement);
-
-  const camera = new THREE.PerspectiveCamera(
-    20,
-    window.innerWidth / window.innerHeight,
-    1,
-    500
-  );
-  camera.position.set(0, 0, 100);
-  camera.lookAt(0, 0, 0);
-
-  const scene = new THREE.Scene();
-
-  const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
-
-  const points = [];
-  points.push(new THREE.Vector3(-10, 0, 0));
-  points.push(new THREE.Vector3(10, 0, 0));
-  points.push(new THREE.Vector3(0, 10, 0));
-  points.push(new THREE.Vector3(-10, 0, 0));
-
-  const geometry = new THREE.BufferGeometry().setFromPoints(points);
-  const line = new THREE.Line(geometry, material);
-  scene.add(line);
-  renderer.render(scene, camera);
     }
 
-    draw();
+
+
+
 
   return (
     <div className="App">
@@ -91,6 +71,8 @@ function Dreieck() {
       <input onChange={ (e) => setinput2(e.target.value)}/>
       <button type="button" value="calculate" onClick={calculate}>calculate </button>
       <p>{result}</p>
+
+      <Sketch setup={setup} draw={draw} />
       </header>
     </div>
   );
