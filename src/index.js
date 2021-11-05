@@ -4,10 +4,11 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import Dreieck from './Dreieck';
+import Test from './Test';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Dreieck></Dreieck>
+    <Dreieck/>
   </React.StrictMode>,
   document.getElementById('root')
 );

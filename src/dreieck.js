@@ -1,8 +1,13 @@
 import {useEffect, useState} from "react";
+import * as THREE from 'three';
+
+
 
 function Dreieck() {
+  const scene = new THREE.Scene();
+
   const formuladata =[
-    {Value: "c", Formula: "√ A^2 + B^2", id: 0},
+    {Value: "c", Formula: "√ A^2 + B^2", id: 0, inputname1: "Kathete", inputname2: "Kathete", outputname: "Hypothenuse", input1: 0, input2: 0, result: 0},
     {Value: "a", Formula: "√ C^2 - B^2", id: 1},
     {Value: "alpha", Formula: "180 - gamma - beta", id: 2},
     {Value: "gamma", Formula: "180- alpha - beta", id: 3},
@@ -20,6 +25,24 @@ function Dreieck() {
     const [clength, setclength] = useState(0);
 
     function calculate(){
+      switch(selectedFormula.Value){
+        case 0:
+          //calculate the hypotenuse
+          selectedFormula.result = 180 - selectedFormula.input1 - selectedFormula.input2;
+          return;
+        case 1:
+          //calculate the kathete
+          return;
+        case 2:
+          //calculate alphaangle
+          return; 
+        case 3:
+          //calculate gammaangle
+          return; 
+        case 4:
+          // calculate the height
+          return;
+      }
       calculateangle();
       calculatelength();
       
@@ -33,17 +56,48 @@ function Dreieck() {
     function calculatelength(){
       let result;
       result = Math.sqrt(Math.pow(alength,2) + Math.pow(blength,2));
-      setclength(result);
+      setclength(Math.round(result));
+    }
+    function draw(){
+      const renderer = new THREE.WebGLRenderer();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  document.body.appendChild(renderer.domElement);
+
+  const camera = new THREE.PerspectiveCamera(
+    20,
+    window.innerWidth / window.innerHeight,
+    1,
+    500
+  );
+  camera.position.set(0, 0, 100);
+  camera.lookAt(0, 0, 0);
+
+  const scene = new THREE.Scene();
+
+  const material = new THREE.LineBasicMaterial({ color: 0x0000ff });
+
+  const points = [];
+  points.push(new THREE.Vector3(-10, 0, 0));
+  points.push(new THREE.Vector3(10, 0, 0));
+  points.push(new THREE.Vector3(0, 10, 0));
+  points.push(new THREE.Vector3(-10, 0, 0));
+
+  const geometry = new THREE.BufferGeometry().setFromPoints(points);
+  const line = new THREE.Line(geometry, material);
+  scene.add(line);
+  renderer.render(scene, camera);
     }
 
-
+    draw();
 
   return (
     <div className="App">
       <header className="App-header">
-      <h3>What do you want to calculate</h3>
-          { selectFormulas.map ( (object, i) => (<a> {object.Value} <input key={i} type="radio" name="formula" onChange={ (e) => setselectedFormula(object)}/></a>))}
+      <select>
+      <option>What do you want to calculate</option>
+          { selectFormulas.map ( (object, i) => (<option key={i} name="formula" placeholder={object.Value} value={object.Value} onChange={ (e) => setselectedFormula(object)}/>))}
       <h4>Current formula = {selectedFormula.Formula}</h4>
+      </select>
       
       <lable>Alpha Winkel</lable>
       <input type="number" value={alphaangle} onChange={ (e) => {if(e.target.value <= 178){
@@ -67,10 +121,7 @@ function Dreieck() {
       <p>Beta° = {betaangle}</p>
       <p>Gamma° = {gammaangle}</p>
 
-
-      <p>A Länge {alength}</p>
-      <p>B Länge {blength}</p>
-      <p>C Länge {clength}</p>
+    
 
 
       
