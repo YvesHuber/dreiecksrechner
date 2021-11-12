@@ -1,57 +1,48 @@
-import {useEffect, useState} from "react";
-import * as THREE from 'three';
+import { useState} from "react";
 import Sketch from "react-p5";
 
 
 
-function Dreieck() {
+export default function Dreieck() {
 
-
-  const setup = (p5, canvasParentRef) => {
-		p5.createCanvas(500, 500).parent(canvasParentRef);
-	};
-  const draw = (p5) => {
-		p5.background(0);
-		p5.triangle(input1, input2, result, 90,30, 60);
-	};
 
   const formuladata =[
-    {Value: "c", Formula: "√ A^2 + B^2", id: 1},
-    {Value: "a", Formula: "√ C^2 - B^2", id: 2},
-    {Value: "alpha", Formula: "180 - gamma - beta", id: 3},
-    {Value: "gamma", Formula: "180 - alpha - beta", id: 4},
-    {Value: "height", Formula: "2 * a / b", id: 3},
+    {Formula: "2 Winkel Kathete", id: 1},
+    {Formula: "2 Winkel hypothenuse", id: 2},
+    {Formula: "2 Kathete 1 Winkel", id: 3},
+    {Formula: "1 Kathete 1 hypothenuse  1 Winkel", id: 4},
     ];
-    const [Formulas, setFormulas] = useState(formuladata);
+    const [Formulas, ] = useState(formuladata);
     const [formulaid, setformulaid] = useState(0);
 
     const [input1, setinput1] = useState(0);
     const [input2, setinput2] = useState(0);
+    const [input3, setinput3] = useState(0);
+
+
     const [result, setresult] = useState(0);
+    const [angleB, setangeB] = useState(0);
+    const [resultangle, setresultangle] = useState(0);
 
 
 
 
-    function calculate(){      
-      if (formulaid == 1){
-        //calculate hypothenuse
-        setresult(Math.sqrt( Math.pow(input1, 2) + Math.pow(input2,2)));
-        console.log(result + " result");
+    function calculate(){    
+
+
+      if (formulaid === 1){
+
       }
-      else if (formulaid == 2){
-        //calculate the kathete
-        setresult(Math.sqrt( Math.pow(input1, 2) - Math.pow(input2,2)));
-        console.log(result + " result");
+      else if (formulaid === 2){
+
       }      
-      else if (formulaid == 3 || formulaid == 4){
-        //calculate angle
-        setresult(180 - input1 - input2);
-        console.log(result + " result");
+      else if (formulaid === 3 ){
+
       }      
-      else if (formulaid == 5){
-        //calculate hypothenuse
-        setresult( 2 * input1 / input2);
+      else if (formulaid === 4){
+
       }
+      
     }
 
 
@@ -64,17 +55,20 @@ function Dreieck() {
         <h1>What do you want to Calculate?</h1>
       <select onChange={ (e) => setformulaid(e.target.value)}>
           { 
-  Formulas.map ( (object, i) => (<option key={i} name="formula" value={object.id} >{object.Value}</option>))}
+  Formulas.map ( (object, i) => (<option key={i} name="formula" value={object.id} >{object.Formula}</option>))}
       </select>
-
+      <p>Seite1</p>
       <input onChange={ (e) => setinput1(e.target.value)}/>
+      <p>Seite2</p>
       <input onChange={ (e) => setinput2(e.target.value)}/>
+      <p>Winkel A</p>
+      <input onChange={ (e) => setinput3(e.target.value)}/>
+
       <button type="button" value="calculate" onClick={calculate}>calculate </button>
       <p>{result}</p>
+      <p>{resultangle}</p>
 
-      <Sketch setup={setup} draw={draw} />
       </header>
     </div>
   );
 }
-export default Dreieck;
