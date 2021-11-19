@@ -7,10 +7,8 @@ export default function Dreieck() {
 
 
   const formuladata =[
-    {Formula: "2 Winkel Kathete", id: 1},
-    {Formula: "2 Winkel hypothenuse", id: 2},
-    {Formula: "2 Kathete 1 Winkel", id: 3},
-    {Formula: "1 Kathete 1 hypothenuse  1 Winkel", id: 4},
+    {Formula: "Lösung 1", id: 1},
+    {Formula: "Lösung 2", id: 2},
     ];
     const [Formulas, ] = useState(formuladata);
     const [formulaid, setformulaid] = useState(0);
@@ -21,29 +19,52 @@ export default function Dreieck() {
 
 
     const [result, setresult] = useState(0);
-    const [angleB, setangeB] = useState(0);
-    const [resultangle, setresultangle] = useState(0);
+    const [beta, setbeta] = useState(0);
+    const [gamma, setgamma] = useState(0);
 
 
 
-
-    function calculate(){    
-
-
-      if (formulaid === 1){
-
-      }
-      else if (formulaid === 2){
-
-      }      
-      else if (formulaid === 3 ){
-
-      }      
-      else if (formulaid === 4){
-
+    function draw() {
+      var canvas = document.getElementById("canvas");
+      if (canvas.getContext"2d"){
+        var ctx = canvas.getContext("2d");
       }
       
     }
+
+
+    function calculate(){    
+      console.log(formulaid);
+
+
+      if (formulaid == 1){
+
+        // Seite 2 = hypothesis
+
+        console.log(Math.asin(input1 / input2))
+        setbeta(Math.round(Math.asin(input1 / input2) * 100))
+        console.log(Math.sqrt(Math.pow(input2, 2) - Math.pow(input1, 2)))
+        setresult(Math.sqrt(Math.pow(input2, 2) - Math.pow(input1, 2)))
+        console.log(180-beta-input3)
+        setgamma(180-beta-input3)
+
+      }
+      else if (formulaid == 2){
+
+        // Seite 2 = cathete
+
+        console.log(Math.sqrt(Math.pow(input1, 2) + Math.pow(input2,2)))
+        setresult(Math.sqrt(Math.pow(input1, 2) + Math.pow(input2,2)))
+        setbeta(90)
+        setgamma(180-input3-beta)
+
+
+      }      
+      
+    }
+
+    draw();
+
 
 
 
@@ -54,19 +75,23 @@ export default function Dreieck() {
       <header className="App-header">
         <h1>What do you want to Calculate?</h1>
       <select onChange={ (e) => setformulaid(e.target.value)}>
+        <option>Auswählen</option>
           { 
   Formulas.map ( (object, i) => (<option key={i} name="formula" value={object.id} >{object.Formula}</option>))}
       </select>
-      <p>Seite1</p>
+      <p>Seite 1</p>
       <input onChange={ (e) => setinput1(e.target.value)}/>
-      <p>Seite2</p>
-      <input onChange={ (e) => setinput2(e.target.value)}/>
-      <p>Winkel A</p>
+      <p>Seite 2</p>
+      <input onChange={ (e) => setinput2(e.target.value)}/>      
+      <p>Winkel 1</p>
       <input onChange={ (e) => setinput3(e.target.value)}/>
 
       <button type="button" value="calculate" onClick={calculate}>calculate </button>
-      <p>{result}</p>
-      <p>{resultangle}</p>
+      <p>Seite 3: {result}</p>
+      <p>Winkel b : {beta}</p>
+      <p>Winkel c : {gamma}</p>
+
+      <canvas id="canvas" width="500" height="500"></canvas>
 
       </header>
     </div>
