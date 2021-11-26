@@ -1,14 +1,22 @@
 import { useState} from "react";
-import Sketch from "react-p5";
 
 
 
 export default function Dreieck() {
 
+  const [data, setdata] = useState([
+    {Name: "a", value: ""},
+    {Name: "b", value: ""},
+    {Name: "c", value: ""},
+    {Name: "alpha", value: ""},
+    {Name: "beta", value: ""},
+    {Name: "gamma", value: ""},
+  ])
+
 
   const formuladata =[
-    {Formula: "Lösung 1", id: 1},
-    {Formula: "Lösung 2", id: 2},
+    {Formula: "Lösung 1 Seite 2 = Hypothenuse", id: 1},
+    {Formula: "Lösung 2 Seite 2 = Katethe", id: 2},
     ];
     const [Formulas, ] = useState(formuladata);
     const [formulaid, setformulaid] = useState(0);
@@ -25,10 +33,7 @@ export default function Dreieck() {
 
 
     function draw() {
-      var canvas = document.getElementById("canvas");
-      if (canvas.getContext"2d"){
-        var ctx = canvas.getContext("2d");
-      }
+
       
     }
 
@@ -40,11 +45,13 @@ export default function Dreieck() {
       if (formulaid == 1){
 
         // Seite 2 = hypothesis
+        var angle = Math.round(Math.asin(input1 / input2) * 100);
+        var length = Math.sqrt(Math.pow(input2, 2) - Math.pow(input1, 2));
 
-        console.log(Math.asin(input1 / input2))
-        setbeta(Math.round(Math.asin(input1 / input2) * 100))
-        console.log(Math.sqrt(Math.pow(input2, 2) - Math.pow(input1, 2)))
-        setresult(Math.sqrt(Math.pow(input2, 2) - Math.pow(input1, 2)))
+        console.log(angle)
+        setbeta(angle)
+        console.log(length)
+        setresult(length)
         console.log(180-beta-input3)
         setgamma(180-beta-input3)
 
@@ -53,8 +60,10 @@ export default function Dreieck() {
 
         // Seite 2 = cathete
 
-        console.log(Math.sqrt(Math.pow(input1, 2) + Math.pow(input2,2)))
-        setresult(Math.sqrt(Math.pow(input1, 2) + Math.pow(input2,2)))
+        var length = Math.sqrt(Math.pow(input2, 2) + Math.pow(input1, 2));
+
+        console.log(length)
+        setresult(length)
         setbeta(90)
         setgamma(180-input3-beta)
 
@@ -87,10 +96,11 @@ export default function Dreieck() {
       <input onChange={ (e) => setinput3(e.target.value)}/>
 
       <button type="button" value="calculate" onClick={calculate}>calculate </button>
-      <p>Seite 3: {result}</p>
-      <p>Winkel b : {beta}</p>
-      <p>Winkel c : {gamma}</p>
 
+
+
+            <h2>Results</h2>
+            {data.map(result => result.value)}
       <canvas id="canvas" width="500" height="500"></canvas>
 
       </header>
