@@ -12,8 +12,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Dreieck() {
   const formuladata = [
-    { Formula: "Lösung 1 Seite 2 = Hypothenuse", id: 1 },
-    { Formula: "Lösung 2 Seite 2 = Katethe", id: 2 },
+    { Formula: "Lösung = Hypothenuse", id: 2 },
+    { Formula: "Lösung = Katethe", id: 1 },
   ];
   const [Formulas] = useState(formuladata);
   const [formulaid, setformulaid] = useState(0);
@@ -26,38 +26,29 @@ export default function Dreieck() {
   let draw = (ctx, frameCount) => {};
 
   function calculate() {
-    draw = (ctx, frameCount) => {
-      ctx.beginPath();
-      ctx.moveTo(100, 100);
-      //10 points = 1cm
-      ctx.lineTo(input1 * 10, 100);
-      ctx.lineTo(10 - input3 / 3, input2 * 10);
-      ctx.moveTo(input1 * 10, 100);
-      ctx.lineTo(10 - input3 / 3, input2 * 10);
-
-      ctx.fill();
-    };
     var length;
     if (formulaid == 1) {
       // Seite 2 = hypothesis
       var angle = Math.round(Math.asin(input1 / input2) * 100);
       length = Math.round(Math.sqrt(Math.pow(input2, 2) - Math.pow(input1, 2)));
 
-      console.log(angle);
       setbeta(angle);
-      console.log(length);
       setresult(length);
-      console.log(180 - beta - input3);
-      setgamma(180 - beta - input3);
+      setgamma(180 - angle - input3);
     } else if (formulaid == 2) {
+
       // Seite 2 = cathete
-
+      if(input3 == "90"){
+        var angle = Math.round(Math.asin(input1 / input2) * 100);
+      }
+      else {
+      var angle = 90
+      }
       length = Math.round(Math.sqrt(Math.pow(input2, 2) + Math.pow(input1, 2)));
-
       console.log(length);
       setresult(length);
-      setbeta(90);
-      setgamma(180 - input3 - beta);
+      setbeta(angle);
+      setgamma(180 - input3 - angle);
     }
   }
 
@@ -67,9 +58,10 @@ export default function Dreieck() {
         <Container>
           <Row>
             <Col md="1">
-              <h1>What do you want to Calculate?</h1>
+              <h1>Dreiecksrechner</h1>
             </Col>
           </Row>
+          <br/>
 
           <Row>
             <Col md="1">
@@ -83,53 +75,41 @@ export default function Dreieck() {
               </select>
             </Col>
           </Row>
-          <Row>
-            <Col md="1">
-              <p>Seite1</p>
-            </Col>
-          </Row>
+          <br/>
+
           <Row>
             <Col md="4">
               <InputGroup className="mb-3">
                 <FormControl onChange={(e) => setinput1(e.target.value)} />
-                <InputGroup.Text id="basic-addon1">cm</InputGroup.Text>
+                <InputGroup.Text placeholder="Seite 1"id="basic-addon1">cm</InputGroup.Text>
               </InputGroup>
-            </Col>
-          </Row>
-          <Row>
-            <Col md="1">
-              <p>Seite2</p>
             </Col>
           </Row>
           <Row>
             <Col md="4">
               <InputGroup className="mb-3">
                 <FormControl onChange={(e) => setinput2(e.target.value)} />
-                <InputGroup.Text id="basic-addon1">cm</InputGroup.Text>
+                <InputGroup.Text placeholder="Seite 2"id="basic-addon1">cm</InputGroup.Text>
               </InputGroup>
             </Col>
           </Row>
           <Row>
-            <Col md="1">
-              <p>Winkel1</p>
-            </Col>
-          </Row>
-          <Row>
+
             <Col md="4">
               <InputGroup className="mb-3">
                 <FormControl onChange={(e) => setinput3(e.target.value)} />
-                <InputGroup.Text id="basic-addon1">Grad</InputGroup.Text>
+                <InputGroup.Text placeholder="Winkel 1"id="basic-addon1">Grad</InputGroup.Text>
               </InputGroup>
             </Col>
           </Row>
           <Row>
             <Col md="1">
               <Button variant="light" onClick={calculate}>
-                Calculate
+                Berechnen
               </Button>
             </Col>
           </Row>
-          <br></br>
+          <br/>
           <Row>
             <Col md="4">
               <ListGroup>
